@@ -10,3 +10,15 @@ and open the template in the editor.
  .ui-row-editor .ui-row-editor-pencil {
         margin-left:8px;
     }
+    .ui-datatable .ui-datatable-header {
+    border-bottom: 0 none;
+    font-size: 17px;
+    font-weight: 700;
+    color: black;
+}
+body{
+    background-image: url("../images/background-image.jpg");
+}
+.bg-dark {
+    background-color: #4385bd!important;
+}

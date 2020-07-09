@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>New Category</title>
+         <link rel="stylesheet" href="../../resources/layouts/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../../resources/layouts/css/custom.css"/>
+        <script type="text/javascript" src="../../resources/layouts/js/bootstrap.min.js"/>
+    </h:head>
+    <h:body styleClass="cyan">
+        <ui:include src="../resources/templates/navbar.html" />
+        <h:outputLabel value="" style="margin-bottom: 50px;"></h:outputLabel>
+            #{categoryMBean.setErrorMessage("")}
+        <div class="wrapper container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <h:form>
+                        <p:panel id="panel" header="New Category">
+                            <p:messages id="msgs" />
+                            <c:if test="#{categoryMBean.errorMessage != ''}">
+                                <div class="alert alert-danger" role="alert">
+                                    #{categoryMBean.errorMessage}
+                                </div>
+                            </c:if>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:outputLabel for="categoryName" value="Cagegory Name :" />
+                                <p:inputText id="categoryName" value="#{categoryMBean.categoryBean.name}" required="true" label="Country Name">
+                                    <f:validateLength minimum="2" />
+                                    <p:ajax update="msgCountryName" event="keyup" />
+                                </p:inputText>
+                                <p:message for="categoryName" id="msgCountryName" display="icon" />       
+                            </h:panelGrid>
+                            <p:commandButton value="Save" update="panel" class="btn btn-primary" action="#{categoryMBean.save()}"  />
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

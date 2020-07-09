@@ -7,45 +7,41 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <title>Authors</title>
-        <link rel="stylesheet" href="../../resources/layouts/css/bootstrap.min.css"/>
+        <title>Category</title>
+         <link rel="stylesheet" href="../../resources/layouts/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../../resources/layouts/css/custom.css"/>
         <script type="text/javascript" src="../../resources/layouts/js/bootstrap.min.js"/>
-
     </h:head>
     <h:body styleClass="cyan">
         <ui:include src="../resources/templates/navbar.html" />
         <h:outputLabel value="" style="margin-bottom: 50px;"></h:outputLabel>
-        
+            #{categoryMBean.setErrorMessage("")}
         <div class="wrapper container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 col-sm-12">
-                    <h:form id="authorForm">
-                        <p:growl id="growl" />
-                        <p:growl id="message" />
-                        <p:dataTable var="author" value="#{authorMBean.authors}" style="margin-bottom:40px"  rows="7"
+
+                    <h:form id="categoryForm">
+                        <p:growl id="growl"/>
+                        <p:growl id="message"/>
+                        <p:dataTable var="category" value="#{categoryMBean.categories}" style="margin-bottom:40px"  rows="7"
                                      paginator="true"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                                      rowsPerPageTemplate="5,7,10,15">
                             <f:facet name="header">
-                                Authors
+                                Categories
                             </f:facet>
-                            <p:column headerText="Id" sortBy="#{author.id}">
-                                <h:outputText value="#{author.id}" />
+                            <p:column headerText="Id" sortBy="#{category.id}">
+                                <h:outputText value="#{category.id}" />
                             </p:column>
 
-                            <p:column headerText="Author Name" sortBy="#{author.name}">
-                                <h:outputText value="#{author.name}" />
-                            </p:column>
-
-                            <p:column headerText="Country" sortBy="#{author.country}">
-                                <h:outputText value="#{author.country}" />
+                            <p:column headerText="Category Name" sortBy="#{category.name}">
+                                <h:outputText value="#{category.name}" />
                             </p:column>
                             <p:column headerText="Actions" >
-                                <p:commandLink value ="Edit" style="margin: 2px 4px;width: 60px;font-weight: 800;" action="#{authorMBean.edit(author.id)}" class="btn btn-info"/>
+                                <p:commandLink value ="Edit" style="margin: 2px 4px;width: 60px;font-weight: 800;" action="#{categoryMBean.edit(category.id)}" class="btn btn-info" update="categoryForm categoryForm:growl categoryForm:message"/>
                                 <p:commandLink value ="Remove" style="font-weight: 800;" class="btn btn-danger space" >
-                                    <p:ajax  listener="#{authorMBean.remove(author.id)}" update="authorForm authorForm:growl authorForm:message"/>
+                                    <p:ajax  listener="#{categoryMBean.remove(category.id)}" update="categoryForm categoryForm:growl categoryForm:message"/>
                                     <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
                                 </p:commandLink>
                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -56,7 +52,7 @@
                         </p:dataTable>
                     </h:form>
                     <h:form>
-                        <h:commandButton value="+ New Author" action="#{authorMBean.create()}" class="btn btn-primary"/>
+                        <h:commandButton value="+ New Category" action="#{categoryMBean.create()}" class="btn btn-primary"/>
                     </h:form>
                 </div>
             </div>

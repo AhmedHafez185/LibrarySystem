@@ -4,12 +4,11 @@
  * and open the template in the editor.
  */
 package com.ahmed.library.web.viewlayer.managedbeans;
+
 import com.ahmed.library.web.bll.beans.AuthorBean;
 import com.ahmed.library.web.bll.manager.impl.AuthorManager;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -22,20 +21,23 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "authorMBean")
 @SessionScoped
 public class AuthorMBean implements Serializable {
+
     AuthorManager authorManager;
-    AuthorBean authBean ;
+    AuthorBean authBean;
     List<AuthorBean> authors;
     String errorMessage = "";
+    private String infoMessage = "";
+    private boolean checkMessage = false;
     /**
      * Creates a new instance of AuthorMBean
      */
     public AuthorMBean() {
-        try{
+        try {
             authBean = new AuthorBean();
-        authorManager = new AuthorManager();
-        reloadAuthors();
-        }catch(Exception ex){
-            
+            authorManager = new AuthorManager();
+            reloadAuthors();
+        } catch (Exception ex) {
+
         }
     }
 
@@ -54,46 +56,86 @@ public class AuthorMBean implements Serializable {
     public void setAuthors(List<AuthorBean> authors) {
         this.authors = authors;
     }
-    private void reloadAuthors(){
+
+    private void reloadAuthors() {
+        setErrorMessage("");
         authors = authorManager.findList();
-        
+
     }
-    public String create(){
+
+    public String create() {
+        setErrorMessage("");
         authBean = new AuthorBean();
-        return "addAuthor";
+        return "author_form";
     }
-    public String save(){
-        String Message = "";
+
+    public String save() {
+        setInfoMessage("");
         try {
-            if(authBean.getId() == null){
-            authorManager.add(authBean);
-            Message = "Author Added Successfully";
-            }else{
-                System.out.println("Name : "+authBean.getName());
-                 authorManager.edit(authBean);
-                 Message = "Author Updated Successfully";
+            if (authBean.getId() == null) {
+                authorManager.add(authBean);
+                setInfoMessage("Author Added Successfully");
+            } else {
+                authorManager.edit(authBean);
+                setInfoMessage("Author Updated Successfully");
             }
             reloadAuthors();
             setErrorMessage("");
-            FacesMessage msg = new FacesMessage(Message);
-        FacesContext.getCurrentInstance().addMessage("growlNotifaction", msg);
+             setCheckMessage(true);
+            saveMessage();
             return "authors";
         } catch (Exception ex) {
             setErrorMessage(ex.getMessage());
-            return "addAuthor";
+             setCheckMessage(true);
+            return "author_form";
         }
-        
-        
+
     }
-    public String edit(Integer id){
+
+    public String edit(Integer id) {
         try {
             authBean = authorManager.get(id);
-            
-            return "addAuthor";
+
+            return "author_form";
         } catch (Exception ex) {
             setErrorMessage(ex.getMessage());
-            return "addAuthor";
-        } 
+            return "author_form";
+        }
+    }
+
+    public void remove(Integer id) {
+        setInfoMessage("");
+        try {
+            authorManager.remove(id);
+            reloadAuthors();
+            setInfoMessage("Record Deleted Successfully");
+        } catch (Exception ex) {
+            setInfoMessage("Error : " + ex.getMessage());
+        }
+        setCheckMessage(true);
+        saveMessage();
+        setCheckMessage(false);
+    }
+
+    public void saveMessage() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(getInfoMessage()));
+    }
+    // <editor-fold desc="SETTER & GETTER>
+    public AuthorManager getAuthorManager() {
+        return authorManager;
+    }
+
+    public void setAuthorManager(AuthorManager authorManager) {
+        this.authorManager = authorManager;
+    }
+
+    public String getInfoMessage() {
+        return infoMessage;
+    }
+
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
     }
 
     public String getErrorMessage() {
@@ -103,17 +145,13 @@ public class AuthorMBean implements Serializable {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-    public void remove(Integer id){
-        String Message="";
-        try {
-            authorManager.remove(id);
-            reloadAuthors();
-            Message = "Record Deleted Successfully";
-        } catch (Exception ex) {
-            Message = "Error : "+ex.getMessage();
-        }
-        FacesMessage msg = new FacesMessage(Message);
-        FacesContext.getCurrentInstance().addMessage("growlNotifaction", msg);
+
+    public boolean isCheckMessage() {
+        return checkMessage;
     }
-    
+
+    public void setCheckMessage(boolean checkMessage) {
+        this.checkMessage = checkMessage;
+    }
+    //</editor-fold>
 }
