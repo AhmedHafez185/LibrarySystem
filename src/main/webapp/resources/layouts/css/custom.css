@@ -22,3 +22,6 @@ body{
 .bg-dark {
     background-color: #4385bd!important;
 }
+.value {
+        font-weight: bold;
+    }

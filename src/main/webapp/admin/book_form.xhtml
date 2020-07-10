@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>New Category</title>
+        <link rel="stylesheet" href="../../resources/layouts/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../../resources/layouts/css/custom.css"/>
+        <script type="text/javascript" src="../../resources/layouts/js/bootstrap.min.js"/>
+    </h:head>
+    <h:body styleClass="cyan">
+        <ui:include src="../resources/templates/navbar.html" />
+        <h:outputLabel value="" style="margin-bottom: 50px;"></h:outputLabel>
+            #{bookMBean.setErrorMessage("")}
+        <div class="wrapper container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <h:form>
+                        <p:panel id="panel" header="New Book">
+                            <p:messages id="msgs" />
+                            <c:if test="#{bookMBean.errorMessage != ''}">
+                                <div class="alert alert-danger" role="alert">
+                                    #{bookMBean.errorMessage}
+                                </div>
+                            </c:if>
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:outputLabel for="bookName" value="Book Name :" />
+                                <p:inputText id="bookName" value="#{bookMBean.bookBean.name}" required="true" label="Book Name">
+                                    <f:validateLength minimum="2" />
+                                </p:inputText>
+                                <p:outputLabel for="bookPrice" value="Book Price :" />
+                                <p:inputNumber id="bookPrice" value="#{bookMBean.bookBean.price}" required="true" label="Book Price" >
+                                    <f:convertNumber minFractionDigits="2" />
+                                    <f:validateDoubleRange minimum="0" maximum="10000"/>
+                                </p:inputNumber>
+                                <p:outputLabel for="categoryId" value="Category : " />
+                                <p:selectOneMenu id="categoryId"  value="#{bookMBean.selectedCategory}" style="width:175px" required="true">
+                                    <c:if test="#{bookMBean.bookBean.category != null }">
+                                        <f:selectItem itemLabel="#{bookMBean.bookBean.category.name}" itemValue="#{bookMBean.bookBean.category.id}" />
+                                    </c:if>
+                                    <f:selectItem itemLabel="Select One" itemValue="" /> 
+                                    <f:selectItems value="#{bookMBean.categories}" var="category" itemLabel="#{category.name}" itemValue="#{category.id}" />
+                                </p:selectOneMenu>
+                                <p:outputLabel for="authorId" value="Author : " />
+                                <p:selectOneMenu id="authorId"  value="#{bookMBean.selectedAuthor}" style="width:175px" required="true">
+                                     
+                                    <c:if test="#{bookMBean.bookBean.author != null }">
+                                        <f:selectItem itemLabel="#{bookMBean.bookBean.author.name}" itemValue="#{bookMBean.bookBean.author.id}" />
+                                    </c:if>
+                                    <f:selectItem itemLabel="Select One" itemValue="-1" /> 
+                                    <f:selectItems value="#{bookMBean.author}" var="author" itemLabel="#{author.name}" itemValue="#{author.id}" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <p:commandButton value="Save" update="panel" class="btn btn-primary" action="#{bookMBean.save()}"  />
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

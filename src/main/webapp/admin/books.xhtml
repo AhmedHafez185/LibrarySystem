@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Books</title>
+        <link rel="stylesheet" href="../../resources/layouts/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../../resources/layouts/css/custom.css"/>
+        <script type="text/javascript" src="../../resources/layouts/js/bootstrap.min.js"/>
+
+    </h:head>
+    <h:body styleClass="cyan">
+        <ui:include src="../resources/templates/navbar.html" />
+        <h:outputLabel value="" style="margin-bottom: 50px;"></h:outputLabel>
+        
+        <div class="wrapper container">
+            <div class="row">
+                <div class="col-lg-12 col-md-10 col-sm-12">
+                    <h:form id="bookForm">
+                        <p:growl id="growl" />
+                        <p:growl id="message" />
+                        <p:dataTable var="book" value="#{bookMBean.books}" style="margin-bottom:40px"  rows="7"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                     rowsPerPageTemplate="5,7,10,15">
+                            <f:facet name="header">
+                                Books
+                            </f:facet>
+                            <p:column headerText="Id" sortBy="#{book.id}">
+                                <h:outputText value="#{book.id}" />
+                            </p:column>
+
+                            <p:column headerText="Book Name" sortBy="#{book.name}">
+                                <h:outputText value="#{book.name}" />
+                            </p:column>
+                            <p:column headerText="Category" sortBy="#{book.category.name}">
+                                <h:outputText value="#{book.category.name}" />
+                            </p:column>
+                            <p:column headerText="Author" sortBy="#{book.author.name}">
+                                <h:outputText value="#{book.author.name}" />
+                            </p:column>
+                            <p:column headerText="Price LE" sortBy="#{book.price}">
+                                <h:outputText value="#{book.price}" />
+                            </p:column>
+                            <p:column headerText="Actions" >
+                                <p:commandLink value ="Edit" style="margin: 2px 4px;width: 60px;font-weight: 800;" action="#{bookMBean.edit(book.id)}" class="btn btn-info"/>
+                                <p:commandLink value ="Remove" style="font-weight: 800;" class="btn btn-danger space" >
+                                    <p:ajax  listener="#{bookMBean.remove(book.id)}" update="bookForm bookForm:growl bookForm:message"/>
+                                    <p:confirm header="Confirmation" message="Are you sure?" icon="pi pi-exclamation-triangle" />
+                                </p:commandLink>
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                </p:confirmDialog> 
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                    <h:form>
+                        <h:commandButton value="+ New Book" action="#{bookMBean.create()}" class="btn btn-primary"/>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

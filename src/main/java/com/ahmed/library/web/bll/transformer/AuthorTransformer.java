@@ -37,7 +37,7 @@ public class AuthorTransformer implements GeneralTransformer<Author, AuthorBean>
          Author author = new Author();
          author.setId(bean.getId());
           author.setName(bean.getName());
-          author.setCountry(bean.getCountry());    
+          author.setCountry(bean.getCountry()); 
           return author;
     }
      

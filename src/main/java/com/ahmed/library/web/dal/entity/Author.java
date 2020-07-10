@@ -83,6 +83,11 @@ public class Author  implements java.io.Serializable {
         this.books = books;
     }
 
+    @Override
+    public String toString() {
+        return "Author{" + "id=" + id + ", name=" + name + ", country=" + country + '}';
+    }
+
 
 
 
