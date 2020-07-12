@@ -40,6 +40,7 @@ public class BookMBean implements Serializable {
     private boolean checkMessage = false;
     private AuthorBean authorBean;
     private CategoryBean categoryBean;
+    private BookBean selectedBook;
 
     /**
      * Creates a new instance of BookMBean
@@ -235,4 +236,12 @@ public class BookMBean implements Serializable {
         this.categoryBean = categoryBean;
     }
 
+    public BookBean getSelectedBook() {
+        return selectedBook;
+    }
+
+    public void setSelectedBook(BookBean selectedBook) {
+        this.selectedBook = selectedBook;
+    }
+   
 }

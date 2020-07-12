@@ -3,17 +3,42 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-        <h:head>
-            <f:facet name="first">
-                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-            </f:facet>
-            <link rel="stylesheet" href="resources/layouts/css/bootstrap.min.css"/>
-            <link rel="stylesheet" href="resources/layouts/css/custom.css"/>
+    <h:head>
+        <f:facet name="first">
+            <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        </f:facet>
+        <link rel="stylesheet" href="resources/layouts/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="resources/layouts/css/custom.css"/>
         <script type="text/javascript" src="resources/layouts/js/bootstrap.min.js"/>
-        </h:head>
-        <h:body>
-            <ui:include src="resources/templates/navbar.html" />
-            
-        </h:body>
+    </h:head>
+    <h:body>
+        <ui:include src="resources/templates/navbar.html" />
+        <h:outputLabel value="" style="margin-bottom: 50px;"></h:outputLabel>
+        <div class="wrapper container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 col-sm-12">
+                    <h:form id="form">
+                        <p:dataGrid var="book" value="#{bookMBean.books}" columns="3" layout="grid"
+                                    rows="12" paginator="true" id="cars"
+                                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                    rowsPerPageTemplate="6,12,16">
+
+                            <f:facet name="header">
+                                Books in Library
+                            </f:facet>
+
+                            <p:panel header="#{book.id}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <h:outputText value="#{book.name}" />
+                                    <h:outputText value="#{book.author.name}" />
+                                    <h:outputText value="#{book.category.name}" />
+                                    <h:outputText value="#{book.price}" />
+                                  
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataGrid>
+                    </h:form>
+                </div>></div></div>
+    </h:body>
 </html>
 
