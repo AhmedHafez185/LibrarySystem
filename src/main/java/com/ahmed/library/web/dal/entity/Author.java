@@ -74,7 +74,7 @@ public class Author  implements java.io.Serializable {
         this.country = country;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="author",cascade = CascadeType.MERGE)
+@OneToMany(fetch=FetchType.LAZY, mappedBy="author",cascade = {CascadeType.MERGE,CascadeType.REMOVE})
     public Set<Book> getBooks() {
         return this.books;
     }

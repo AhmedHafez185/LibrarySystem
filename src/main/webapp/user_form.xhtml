@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>New Category</title>
+         <link rel="stylesheet" href="resources/layouts/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="resources/layouts/css/custom.css"/>
+        <script type="text/javascript" src="resources/layouts/js/bootstrap.min.js"/>
+    </h:head>
+    <h:body styleClass="cyan">
+        <ui:include src="resources/templates/navbar.html" />
+        <h:outputLabel value="" style="margin-bottom: 50px;"></h:outputLabel>
+            #{userMBean.setErrorMessage("")}
+        <div class="wrapper container">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 col-sm-10">
+                    <h:form>
+                        <p:panel id="panel" header="New Category">
+                            <p:messages id="msgs" />
+                            <c:if test="#{userMBean.errorMessage != ''}">
+                                <div class="alert alert-danger" role="alert">
+                                    #{userMBean.errorMessage}
+                                </div>
+                            </c:if>
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:outputLabel for="fullName" value="Full Name :" />
+                                <p:inputText id="fullName" value="#{userMBean.userBean.fullName}" required="true" label="Full Name">
+                                    <f:validateLength minimum="6" />
+                                </p:inputText>
+                                <p:outputLabel for="username" value="username :" />
+                                <p:inputText id="username" value="#{userMBean.userBean.username}" required="true" label="User Name">
+                                    <f:validateLength minimum="5" />
+                                </p:inputText>
+                                 <p:outputLabel for="password" value="password :" />
+                                 <p:password id="password" value="#{userMBean.userBean.password}" required="true" label="Password">
+                                    <f:validateLength minimum="6" />
+                                </p:password>
+                                 <p:outputLabel for="confirmPassword" value="Confirm Password :" />
+                                 <p:password id="confirmPassword" value="#{userMBean.userBean.confirm_password}" required="true" label="confirmPassword">
+                                    <f:validateLength minimum="6" />
+                                </p:password>
+                                 <p:outputLabel for="userType" value="User Type :" />
+                                 <p:selectOneMenu id="userType"  value="#{userMBean.userBean.userType}" style="width:175px">
+                                    <f:selectItem itemLabel="Normal User" itemValue="false" />
+                                    <f:selectItem itemLabel="Admin User" itemValue="true" />
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <p:commandButton value="Save" update="panel" class="btn btn-primary" action="#{userMBean.save()}"  />
+                        </p:panel>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>

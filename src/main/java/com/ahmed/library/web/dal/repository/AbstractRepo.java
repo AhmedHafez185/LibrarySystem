@@ -47,7 +47,7 @@ public abstract class AbstractRepo<E> implements CommonRepo<E>{
 
     @Override
     public List<E> findList() {
-         CriteriaBuilder criteriaBuilder = getCurrentSession().getCriteriaBuilder();
+        CriteriaBuilder criteriaBuilder = getCurrentSession().getCriteriaBuilder();
         CriteriaQuery<E> entityCriteriaQuery = criteriaBuilder.createQuery(entityType);
         Root<E> from = entityCriteriaQuery.from(entityType);
         entityCriteriaQuery.select(from);
@@ -55,7 +55,7 @@ public abstract class AbstractRepo<E> implements CommonRepo<E>{
         List<E> entityList = cityQuery.getResultList();
         return entityList;
     }
-
+    
   
     
 }

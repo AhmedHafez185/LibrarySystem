@@ -1,5 +1,6 @@
 package com.ahmed.library.web.dal.entity;
-// Generated Jun 25, 2020 11:00:16 PM by Hibernate Tools 4.3.1
+// Generated Jul 10, 2020 11:17:14 PM by Hibernate Tools 4.3.1
+
 
 
 import java.util.HashSet;
@@ -7,6 +8,9 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -23,10 +27,12 @@ import javax.persistence.UniqueConstraint;
 public class User  implements java.io.Serializable {
 
 
-     private int id;
+     private Integer id;
+     private String fullName;
      private String username;
      private String password;
      private boolean userType;
+     private String picture;
      private Set<BookPublisher> bookPublishers = new HashSet<BookPublisher>(0);
      private Set<Order> orders = new HashSet<Order>(0);
 
@@ -34,31 +40,49 @@ public class User  implements java.io.Serializable {
     }
 
 	
-    public User(int id, String username, String password, boolean userType) {
-        this.id = id;
+    public User(String fullName, String username, String password, boolean userType) {
+        this.fullName = fullName;
         this.username = username;
         this.password = password;
         this.userType = userType;
     }
-    public User(int id, String username, String password, boolean userType, Set<BookPublisher> bookPublishers, Set<Order> orders) {
-       this.id = id;
+    public User(String fullName, String username, String password, boolean userType, String picture, Set<BookPublisher> bookPublishers, Set<Order> orders) {
+       this.fullName = fullName;
        this.username = username;
        this.password = password;
        this.userType = userType;
+       this.picture = picture;
        this.bookPublishers = bookPublishers;
        this.orders = orders;
     }
+
+    public User(String fullName, String username, String password, boolean userType, String picture) {
+        this.fullName = fullName;
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+        this.picture = picture;
+    }
    
      @Id 
-
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", unique=true, nullable=false)
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    
+    @Column(name="full_name", nullable=false)
+    public String getFullName() {
+        return this.fullName;
+    }
+    
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     
@@ -89,6 +113,16 @@ public class User  implements java.io.Serializable {
     
     public void setUserType(boolean userType) {
         this.userType = userType;
+    }
+
+    
+    @Column(name="picture")
+    public String getPicture() {
+        return this.picture;
+    }
+    
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")

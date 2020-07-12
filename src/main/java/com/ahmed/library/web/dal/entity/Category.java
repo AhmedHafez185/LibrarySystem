@@ -4,6 +4,7 @@ package com.ahmed.library.web.dal.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -64,7 +65,7 @@ public class Category  implements java.io.Serializable {
         this.name = name;
     }
 
-@OneToMany(fetch=FetchType.LAZY, mappedBy="category")
+@OneToMany(fetch=FetchType.LAZY, mappedBy="category",cascade = CascadeType.REMOVE)
     public Set<Book> getBooks() {
         return this.books;
     }

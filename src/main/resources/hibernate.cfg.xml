@@ -42,19 +42,19 @@ Contributor(s):
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="show_sql">true</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.current_session_context_class">thread</property>
     <mapping class="com.ahmed.library.web.dal.entity.OrderItems"/>
-    <mapping class="com.ahmed.library.web.dal.entity.Author"/>
-    <mapping class="com.ahmed.library.web.dal.entity.Book"/>
+    <mapping class="com.ahmed.library.web.dal.entity.PublisherSupply"/>
+    <mapping class="com.ahmed.library.web.dal.entity.User"/>
     <mapping class="com.ahmed.library.web.dal.entity.BookPublisher"/>
     <mapping class="com.ahmed.library.web.dal.entity.Category"/>
     <mapping class="com.ahmed.library.web.dal.entity.Order"/>
-    <mapping class="com.ahmed.library.web.dal.entity.PublisherSupply"/>
-    <mapping class="com.ahmed.library.web.dal.entity.User"/>
+    <mapping class="com.ahmed.library.web.dal.entity.Book"/>
+    <mapping class="com.ahmed.library.web.dal.entity.Author"/>
   </session-factory>
 </hibernate-configuration>

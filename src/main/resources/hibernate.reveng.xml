@@ -41,12 +41,12 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="library"/>
-  <table-filter match-name="user"/>
-  <table-filter match-name="book_publisher"/>
-  <table-filter match-name="order"/>
-  <table-filter match-name="book"/>
   <table-filter match-name="author"/>
-  <table-filter match-name="publisher_supply"/>
+  <table-filter match-name="book_publisher"/>
   <table-filter match-name="order_items"/>
+  <table-filter match-name="book"/>
   <table-filter match-name="category"/>
+  <table-filter match-name="publisher_supply"/>
+  <table-filter match-name="user"/>
+  <table-filter match-name="order"/>
 </hibernate-reverse-engineering>
