@@ -20,16 +20,12 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
-    </servlet-mapping>
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>redmond</param-value>
     </context-param>
     <welcome-file-list>
-        <welcome-file>books.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
     <session-config>
         <session-timeout>

@@ -194,6 +194,11 @@ public class UserMBean implements Serializable {
     public void setCheckMessage(boolean checkMessage) {
         this.checkMessage = checkMessage;
     }
+    public boolean error(String msg){
+        if(msg.endsWith("") || msg.isEmpty()||msg.equals(null))
+            return false;
+        return true;
+    }
     
     //</editor-fold>
 

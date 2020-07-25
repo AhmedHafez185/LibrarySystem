@@ -12,6 +12,7 @@ import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -45,26 +46,39 @@ public class AuthorizationAdmin implements Filter {
      * @exception ServletException if a servlet error occurs
      */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-            FilterChain chain) throws IOException, ServletException {
-        try {
-
-            HttpServletRequest reqt = (HttpServletRequest) request;
-            HttpServletResponse resp = (HttpServletResponse) response;
-            HttpSession ses = reqt.getSession(false);
-
-            String reqURI = reqt.getRequestURI();
-            if (reqURI.contains("/login.xhtml")
-                    || (ses != null && ses.getAttribute("username") != null)
-                    || reqURI.contains("/public/")
-                    || reqURI.contains("javax.faces.resource")) {
-                chain.doFilter(request, response);
-            } else {
-                resp.sendRedirect(reqt.getContextPath() + "/login.xhtml");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+ 
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpSession session = httpRequest.getSession(false);
+ 
+        boolean isLoggedIn = (session != null && session.getAttribute("username") != null);
+ 
+        String loginURI = httpRequest.getContextPath() + "/login.xhtml";
+ 
+        boolean isLoginRequest = httpRequest.getRequestURI().equals(loginURI);
+ 
+        boolean isLoginPage = httpRequest.getRequestURI().endsWith("/login.xhtml");
+ 
+        if (isLoggedIn && (isLoginRequest || isLoginPage)) {
+            // the admin is already logged in and he's trying to login again
+            // then forwards to the admin's homepage
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.xhtml");
+            dispatcher.forward(request, response);
+ 
+        } else if (isLoggedIn || isLoginRequest) {
+            // continues the filter chain
+            // allows the request to reach the destination
+            chain.doFilter(request, response);
+ 
+        } else {
+            // the admin is not logged in, so authentication is required
+            // forwards to the Login page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.xhtml");
+            dispatcher.forward(request, response);
+ 
         }
+ 
     }
 
     /**
