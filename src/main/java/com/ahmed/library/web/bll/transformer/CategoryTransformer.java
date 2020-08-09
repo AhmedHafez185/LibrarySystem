@@ -34,6 +34,6 @@ public class CategoryTransformer implements GeneralTransformer<Category,Category
         Category category = new Category();
          category.setId(bean.getId());
          category.setName(bean.getName());
-          return category;
+         return category;
     }
 }
